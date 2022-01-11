@@ -1,0 +1,64 @@
+#%RAML 1.0
+title: BMS
+types:
+  movies: !include datatypes/movies.raml
+  theatre: !include datatypes/theatre.raml
+
+/movies:
+  get:
+    displayName: Get Movies in the city
+    queryParameters:
+      city:
+        description: City Name
+        type: string
+        required: true
+        enum:
+          - Mumbai
+          - Bangalore
+      movieName:
+        displayName: Movie Name
+        type: string
+        required: false
+      movieDate: 
+        description: Movie Date
+        type: date-only
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            type: movies[]
+            examples:
+              output: !include examples/movies.raml
+  /{movieId}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: movies[]
+              examples:
+                output: !include examples/movie.raml
+  /{movieId}/bookTicket:
+    get:
+      displayName: Movies in theaters 
+      queryParameters:
+        city:
+          description: City Name
+          type: string
+          required: true
+          enum:
+            - Mumbai
+            - Bangalore
+      responses:
+          200:
+            body:
+              application/json:
+                type: theatre[]
+                examples:
+                  output: !include examples/theatres.raml
+                             
+          
+      
+
+      
